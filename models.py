@@ -1,5 +1,6 @@
 import enum
 import random
+import json
 
 
 class Suite(enum.Enum):
@@ -26,6 +27,12 @@ class Card:
             return POINTS[self.number]
         else:
             return 0
+
+    def to_dict(self):
+        return {
+            'number': self.number,
+            'suite': self.suite.name,
+        }
 
     def __repr__(self):
         return "<%s, %s>" % (self.number, self.suite)
@@ -76,6 +83,7 @@ class Game:
         self.player2 = player2
         self.winner = None
         self.plays = []  # list of maps. e.a. map has player1, player2, and commander
+        self.life_card = self.deck.peek_last_card()  # for recording
 
     def _deal(self):
         cards = [self.deck.pop() for i in xrange(6)]
@@ -85,6 +93,20 @@ class Game:
     def _print(self, message):
         if self.verbose:
             print(message)
+
+    def log_play(self, commander, c_play, follower, f_play):
+        play = {
+            commander.name: {
+                'hand': [c.to_dict() for c in commander.hand],
+                'play': c_play.to_dict()
+            },
+            follower.name: {
+                'hand': [c.to_dict() for c in follower.hand],
+                'play': f_play.to_dict()
+            },
+            'commander': commander.name
+        }
+        self.plays.append(play)
 
     def play(self):
         self._deal()
@@ -99,9 +121,7 @@ class Game:
             self._print('%s: %s' % (commander.name, c_play))
             f_play = follower.play(life_card, thrown=c_play)
             self._print('%s: %s' % (follower.name, f_play))
-
-            play = {commander: c_play, follower: f_play, 'commander': commander}
-            self.plays.append(play)
+            self.log_play(commander, c_play, follower, f_play)
 
             if Game.is_better(c_play, f_play, life_card):
                 self._print('%s takes it.' % (commander.name))
@@ -128,6 +148,14 @@ class Game:
         else:
             self._print('===== %s WINS =====' % (self.player2.name))
             self.winner = self.player2
+
+    def to_json(self):
+        data = {
+            'winner': self.winner.name,
+            'plays': self.plays,
+            'life_suite': self.life_card.suite.name
+        }
+        return json.dumps(data)
 
 
 class Player:

@@ -1,4 +1,5 @@
 import unittest
+import json
 from models import Game, Card, Suite, Deck
 
 
@@ -25,6 +26,10 @@ class Test(unittest.TestCase):
     def test_deck(self):
         d = Deck()
         self.assertEquals(120, Game.score(d._cards))
+
+    def test_serializable(self):
+        json.dumps(Card(1, Suite.ORO))
+        self.assertTrue(True)
 
     def test_cases(self):
         for case in TEST_CASES:
