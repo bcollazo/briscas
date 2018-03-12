@@ -69,7 +69,8 @@ class Game:
     def score(pile):
         return sum([c.points() for c in pile])
 
-    def __init__(self, player1, player2):
+    def __init__(self, player1, player2, verbose=False):
+        self.verbose = verbose
         self.deck = Deck()
         self.player1 = player1
         self.player2 = player2
@@ -81,13 +82,9 @@ class Game:
         self.player1.init([cards[0], cards[2], cards[4]])
         self.player2.init([cards[1], cards[3], cards[5]])
 
-    def _print(self):
-        print("===== GAME =====")
-        print("Player 1 Hand: %s" % (self.player1.hand))
-        print("Player 2 Hand: %s" % (self.player2.hand))
-        print("LIFE: " + str(self.deck.peek_last_card()))
-        print("PLAYS: " + str(self.plays))
-        print("=========")
+    def _print(self, message):
+        if self.verbose:
+            print(message)
 
     def play(self):
         self._deal()
@@ -95,25 +92,24 @@ class Game:
         commander = self.player1
         follower = self.player2
         life_card = self.deck.peek_last_card()
-        print('Life Card: ' + str(life_card))
+        self._print('Life Card: ' + str(life_card))
         while self.player1.has_cards() or self.player2.has_cards():
-            print("===== Turn: ")
+            self._print("===== Turn: ")
             c_play = commander.play(life_card)
-            print(c_play)
+            self._print('%s: %s' % (commander.name, c_play))
             f_play = follower.play(life_card, thrown=c_play)
-            print(f_play)
+            self._print('%s: %s' % (follower.name, f_play))
 
             play = {commander: c_play, follower: f_play, 'commander': commander}
             self.plays.append(play)
 
             if Game.is_better(c_play, f_play, life_card):
+                self._print('%s takes it.' % (commander.name))
                 commander.push_to_pile([c_play, f_play])
-                # commander stays commander
-                print('TOP')
             else:
+                self._print('%s takes it.' % (follower.name))
                 follower.push_to_pile([c_play, f_play])
                 commander, follower = (follower, commander)
-                print('BOTTOM')
 
             if self.deck.has_cards():
                 commander.take_into_hand(self.deck.pop())
@@ -121,21 +117,22 @@ class Game:
 
         p1_score = Game.score(self.player1.pile)
         p2_score = Game.score(self.player2.pile)
-        print('Player 1 Points: ' + str(p1_score))
-        print('Player 2 Points: ' + str(p2_score))
+        self._print('%s points: %d' % (self.player1.name, p1_score))
+        self._print('%s points: %d' % (self.player2.name, p2_score))
 
         if p1_score > p2_score:
-            print("Player 1 WON!")
+            self._print('===== %s WINS =====' % (self.player1.name))
             self.winner = self.player1
         elif p1_score == p2_score:
-            print("Empate!")
+            self._print("Empate!")
         else:
-            print("Player 2 WON!")
+            self._print('===== %s WINS =====' % (self.player2.name))
             self.winner = self.player2
 
 
 class Player:
-    def __init__(self):
+    def __init__(self, name):
+        self.name = name
         self.pile = []
 
     def init(self, hand):
@@ -158,10 +155,9 @@ class HumanPlayer(Player):
     def play(self, life_card, thrown=None):
         print('Hand: ' + str(self.hand))
         playable = [str(i) for i in xrange(len(self.hand))]
-        prompt = 'Your turn (%s) >>> ' % (', '.join(playable))
+        prompt = 'Choose (%s) >>> ' % (', '.join(playable))
         i = raw_input(prompt)
         while i not in playable and i != 'exit':
-            print('Bad input')
             i = raw_input(prompt)
         if i == 'exit':
             exit()
@@ -172,3 +168,11 @@ class RandomPlayer(Player):
     def play(self, life_card, thrown=None):
         i = random.randint(0, len(self.hand) - 1)
         return self.hand.pop(i)
+
+
+class LocalPlayer(Player):
+    pass
+
+
+class SmartPlayer(Player):
+    pass
