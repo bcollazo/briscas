@@ -3,11 +3,30 @@ import random
 import json
 
 
+class Colors:
+    RESET = '\033[0m'
+    BOLD = '\033[01m'
+    RED = '\033[31m'
+    GREEN = '\033[32m'
+    BLUE = '\033[34m'
+    YELLOW = '\033[93m'
+
+
 class Suite(enum.Enum):
     ORO = 1
     COPA = 2
     ESPADA = 3
     BASTON = 4
+
+    def __str__(self):
+        if self == Suite.ORO:
+            return Colors.YELLOW + self.name + Colors.RESET
+        elif self == Suite.COPA:
+            return Colors.RED + self.name + Colors.RESET
+        elif self == Suite.ESPADA:
+            return Colors.BLUE + self.name + Colors.RESET
+        elif self == Suite.BASTON:
+            return Colors.GREEN + self.name + Colors.RESET
 
 
 POINTS = {1: 11, 3: 10, 12: 4, 11: 3, 10: 2}
@@ -35,7 +54,11 @@ class Card:
         }
 
     def __repr__(self):
-        return "<%s, %s>" % (self.number, self.suite)
+        if self.number in [1, 3]:
+            number = Colors.BOLD + str(self.number) + Colors.RESET
+        else:
+            number = self.number
+        return "[%s %s]" % (number, self.suite)
 
 
 class Deck:
@@ -116,7 +139,7 @@ class Game:
         life_card = self.deck.peek_last_card()
         self._print('Life Card: ' + str(life_card))
         while self.player1.has_cards() or self.player2.has_cards():
-            self._print("===== Turn: ")
+            self._print("\n\n===== Turn: ")
             c_play = commander.play(life_card)
             self._print('%s: %s' % (commander.name, c_play))
             f_play = follower.play(life_card, thrown=c_play)
@@ -137,8 +160,10 @@ class Game:
 
         p1_score = Game.score(self.player1.pile)
         p2_score = Game.score(self.player2.pile)
-        self._print('%s points: %d' % (self.player1.name, p1_score))
-        self._print('%s points: %d' % (self.player2.name, p2_score))
+        self._print('%s points: %d [%s]' % (
+            self.player1.name, p1_score, [c for c in self.player1.pile if c.number in POINTS]))
+        self._print('%s points: %d [%s]' % (
+            self.player2.name, p2_score, [c for c in self.player2.pile if c.number in POINTS]))
 
         if p1_score > p2_score:
             self._print('===== %s WINS =====' % (self.player1.name))

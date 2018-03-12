@@ -31,14 +31,14 @@ class Player(object):
 class HumanPlayer(Player):
     def play(self, life_card, thrown=None):
         print('Hand: ' + str(self.hand))
-        playable = [str(i) for i in xrange(len(self.hand))]
+        playable = [str(i + 1) for i in xrange(len(self.hand))]
         prompt = 'Choose (%s) >>> ' % (', '.join(playable))
         i = raw_input(prompt)
         while i not in playable and i != 'exit':
             i = raw_input(prompt)
         if i == 'exit':
             exit()
-        return self.hand.pop(int(i))
+        return self.hand.pop(int(i) - 1)
 
 
 class RandomPlayer(Player):
