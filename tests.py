@@ -1,5 +1,5 @@
 import unittest
-from models import Game, Card, Suite
+from models import Game, Card, Suite, Deck
 
 
 TEST_CASES = [
@@ -21,6 +21,10 @@ TEST_CASES = [
 
 
 class Test(unittest.TestCase):
+
+    def test_deck(self):
+        d = Deck()
+        self.assertEquals(120, Game.score(d._cards))
 
     def test_cases(self):
         for case in TEST_CASES:
