@@ -1,6 +1,6 @@
 import unittest
 
-from models.core import Game, Card, Suite, Deck
+from briscas.models.core import Game, Card, Suite, Deck
 
 
 TEST_CASES = [
@@ -25,12 +25,12 @@ class Test(unittest.TestCase):
 
     def test_deck(self):
         d = Deck()
-        self.assertEquals(120, Game.score(d._cards))
+        self.assertEqual(120, Game.score(d._cards))
 
     def test_cases(self):
         for case in TEST_CASES:
             (a, b, life, result) = case
-            self.assertEquals(result, Game.is_better(a, b, life))
+            self.assertEqual(result, Game.is_better(a, b, life))
 
 if __name__ == '__main__':
     unittest.main()

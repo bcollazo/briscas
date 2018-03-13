@@ -1,7 +1,8 @@
 import os
 import uuid
-from models.core import Game
-from models.players import RandomPlayer
+
+from briscas.models.core import Game
+from briscas.models.players import RandomPlayer
 
 # Ensure data dir exists
 DATA_DIR = 'data'
@@ -14,7 +15,7 @@ except:
 player1 = RandomPlayer('P1')
 player2 = RandomPlayer('P2')
 i = 0
-while i < 1000:
+while i < 100:
     game = Game(player1, player2)
     game.play()
     line = game.to_json()

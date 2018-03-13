@@ -65,7 +65,7 @@ class Deck:
     def __init__(self):
         self._cards = []
         for s in Suite:
-            for n in xrange(1, 13):
+            for n in range(1, 13):
                 self._cards.append(Card(n, s))
         random.shuffle(self._cards)
 
@@ -109,7 +109,7 @@ class Game:
         self.life_card = self.deck.peek_last_card()  # for recording
 
     def _deal(self):
-        cards = [self.deck.pop() for i in xrange(6)]
+        cards = [self.deck.pop() for i in range(6)]
         self.player1.init([cards[0], cards[2], cards[4]])
         self.player2.init([cards[1], cards[3], cards[5]])
 

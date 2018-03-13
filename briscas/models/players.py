@@ -1,9 +1,10 @@
 import random
 import os
 import json
-from models.core import Game
 
-NUMBER_ORDERING = [1, 3] + range(12, 3, -1) + [2]
+from briscas.models.core import Game
+
+NUMBER_ORDERING = [1, 3] + list(range(12, 3, -1)) + [2]
 
 
 class Player(object):
@@ -31,11 +32,11 @@ class Player(object):
 class HumanPlayer(Player):
     def play(self, life_card, thrown=None):
         print('Hand: ' + str(self.hand))
-        playable = [str(i + 1) for i in xrange(len(self.hand))]
+        playable = [str(i + 1) for i in range(len(self.hand))]
         prompt = 'Choose (%s) >>> ' % (', '.join(playable))
-        i = raw_input(prompt)
+        i = input(prompt)
         while i not in playable and i != 'exit':
-            i = raw_input(prompt)
+            i = input(prompt)
         if i == 'exit':
             exit()
         return self.hand.pop(int(i) - 1)

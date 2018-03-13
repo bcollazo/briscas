@@ -1,6 +1,5 @@
-# Make a game against computer.
-from models.core import Game
-from models.players import HumanPlayer, RandomPlayer, LocalPlayer, SmartPlayer, KNNPlayer
+from briscas.models.core import Game
+from briscas.models.players import HumanPlayer, RandomPlayer, LocalPlayer, SmartPlayer, KNNPlayer
 
 
 def choose_player(name):
@@ -10,10 +9,10 @@ def choose_player(name):
     print('\t2. Local Player')
     print('\t3. Smart Player')
     print('\t4. KNN Player')
-    i = raw_input('>>> ')
+    i = input('>>> ')
     while i not in ['0', '1', '2', '3', '4', 'exit']:
         print('Please enter a number from 0 to 4')
-        i = raw_input('>>> ')
+        i = input('>>> ')
     if i == 'exit':
         exit()
     return {
