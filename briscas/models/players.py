@@ -32,12 +32,12 @@ class Player(object):
 class HumanPlayer(Player):
     def play(self, life_card, thrown=None):
         print('Hand: ' + str(self.hand))
-        playable = [str(i + 1) for i in range(len(self.hand))]
-        prompt = 'Choose (%s) >>> ' % (', '.join(playable))
+        playable = [i + 1 for i in range(len(self.hand))]
+        prompt = 'Choose (%s) >>> ' % (', '.join([str(i) for i in playable]))
         i = input(prompt)
-        while i not in playable and i != 'exit':
+        while i not in playable and i != exit:
             i = input(prompt)
-        if i == 'exit':
+        if i == exit:
             exit()
         return self.hand.pop(int(i) - 1)
 
