@@ -11,6 +11,7 @@ name = "pypi"
 
 [dev-packages]
 
+pytest = "*"
 
 
 [requires]

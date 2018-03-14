@@ -105,7 +105,7 @@ class Game:
         self.player1 = player1
         self.player2 = player2
         self.winner = None
-        self.plays = []  # list of maps. e.a. map has player1, player2, and commander
+        self.plays = []  # list of maps
         self.life_card = self.deck.peek_last_card()  # for recording
 
     def _deal(self):
@@ -161,9 +161,11 @@ class Game:
         p1_score = Game.score(self.player1.pile)
         p2_score = Game.score(self.player2.pile)
         self._print('%s points: %d [%s]' % (
-            self.player1.name, p1_score, [c for c in self.player1.pile if c.number in POINTS]))
+            self.player1.name, p1_score,
+            [c for c in self.player1.pile if c.number in POINTS]))
         self._print('%s points: %d [%s]' % (
-            self.player2.name, p2_score, [c for c in self.player2.pile if c.number in POINTS]))
+            self.player2.name, p2_score,
+            [c for c in self.player2.pile if c.number in POINTS]))
 
         if p1_score > p2_score:
             self._print('===== %s WINS =====' % (self.player1.name))

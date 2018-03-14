@@ -21,7 +21,7 @@ TEST_CASES = [
 ]
 
 
-class Test(unittest.TestCase):
+class ModelTest(unittest.TestCase):
 
     def test_deck(self):
         d = Deck()
@@ -31,6 +31,7 @@ class Test(unittest.TestCase):
         for case in TEST_CASES:
             (a, b, life, result) = case
             self.assertEqual(result, Game.is_better(a, b, life))
+
 
 if __name__ == '__main__':
     unittest.main()

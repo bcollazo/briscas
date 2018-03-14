@@ -8,7 +8,7 @@ from briscas.models.players import RandomPlayer
 DATA_DIR = 'data'
 try:
     os.mkdir(DATA_DIR)
-except:
+except Exception as e:
     pass
 
 

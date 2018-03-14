@@ -3,6 +3,7 @@ import os
 import json
 
 from briscas.models.core import Game
+from briscas.util import ask_for_input
 
 NUMBER_ORDERING = [1, 3] + list(range(12, 3, -1)) + [2]
 
@@ -34,11 +35,7 @@ class HumanPlayer(Player):
         print('Hand: ' + str(self.hand))
         playable = [i + 1 for i in range(len(self.hand))]
         prompt = 'Choose (%s) >>> ' % (', '.join([str(i) for i in playable]))
-        i = input(prompt)
-        while i not in playable and i != exit:
-            i = input(prompt)
-        if i == exit:
-            exit()
+        i = ask_for_input(prompt, playable)
         return self.hand.pop(int(i) - 1)
 
 
@@ -103,9 +100,11 @@ class KNNPlayer(Player):
 
     def play(self, life_card, thrown=None):
         # Find k closest hands in games won.
-        # out of all similar hands in given situation (thrown, life) whats concensus from winners.
+        # out of all similar hands in given situation (thrown, life)
+        # whats concensus from winners?
         hands = []
         for game in self.games:
             winner = game['winner']
             for play in game['plays']:
                 pass
+        print(hands, winner)  # TODO:
