@@ -2,11 +2,21 @@
 briscas
 #######
 
-.. image:: https://travis-ci.org/bcollazo/briscas.svg?branch=master
-   :target: https://travis-ci.org/bcollazo/briscas
+.. image:: https://img.shields.io/pypi/v/briscas.svg
+    :target: https://pypi.python.org/pypi/briscas
+    :alt: Latest Version
+
+.. image:: https://img.shields.io/pypi/l/briscas.svg
+    :target: https://pypi.python.org/pypi/briscas
 
 .. image:: https://img.shields.io/pypi/pyversions/briscas.svg
     :target: https://pypi.python.org/pypi/briscas
+
+.. image:: https://codecov.io/gh/bcollazo/briscas/branch/master/graph/badge.svg
+   :target: https://codecov.io/gh/bcollazo/briscas
+
+.. image:: https://travis-ci.org/bcollazo/briscas.svg?branch=master
+    :target: https://travis-ci.org/bcollazo/briscas
 
 Python library to model the briscas card game.
 
