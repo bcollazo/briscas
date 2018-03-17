@@ -13,6 +13,7 @@ name = "pypi"
 
 pytest = "*"
 mock = "*"
+"flake8" = "*"
 
 
 [requires]
