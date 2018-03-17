@@ -4,6 +4,9 @@ init:
 ifeq (${TRAVIS_PYTHON_VERSION},2.7)
 	pip install future
 endif
+ifeq (${TRAVIS_PYTHON_VERSION},3.3)
+	pip install --upgrade setuptools
+endif
 
 test:
 	pipenv run coverage run --source briscas -m py.test tests
