@@ -100,5 +100,9 @@ ENV/
 # mypy
 .mypy_cache/
 
+# Added by Bryan:
+.pytest_cache/
+
 # Briscas-specific:
 data/
+
