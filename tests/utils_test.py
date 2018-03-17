@@ -6,12 +6,11 @@ from briscas.util import ask_for_input
 
 class UtilsTest(unittest.TestCase):
     def test_ask_for_input_until_allows(self):
-        times_called = 0
+        d = {'times_called': 0}  # We use dictionary for 2-3 compat.
 
         def side_effect(arg):
-            nonlocal times_called
-            times_called += 1
-            return 'bad_input' if times_called < 2 else 'a'
+            d['times_called'] += 1
+            return 'bad_input' if d['times_called'] < 2 else 'a'
 
         input_mock = mock.Mock(side_effect=side_effect)
         i = ask_for_input('>>>', ['a', 'b'],
