@@ -1,6 +1,7 @@
 import unittest
 
 from briscas.models.core import Game, Card, Suite, Deck
+from briscas.models.players import RandomPlayer
 
 
 TEST_CASES = [
@@ -27,10 +28,37 @@ class ModelTest(unittest.TestCase):
         d = Deck()
         self.assertEqual(120, Game.score(d._cards))
 
+    def test_deck_methods(self):
+        d = Deck()
+        card = d.peek_last_card()
+
+        self.assertTrue(d.has_cards())
+        while d.has_cards():
+            popped = d.pop()
+
+        self.assertEqual(card, popped)
+
+    def test_invalid_card_number(self):
+        with self.assertRaises(Exception):
+            Card(15, Suite.ORO)
+
+    def test_points(self):
+        self.assertEqual(Card(1, Suite.ORO).points(), 11)
+        self.assertEqual(Card(3, Suite.ORO).points(), 10)
+        self.assertEqual(Card(2, Suite.ORO).points(), 0)
+        self.assertEqual(Card(11, Suite.ORO).points(), 3)
+
     def test_cases(self):
         for case in TEST_CASES:
             (a, b, life, result) = case
             self.assertEqual(result, Game.is_better(a, b, life))
+
+    def test_game(self):
+        p1 = RandomPlayer('P1')
+        p2 = RandomPlayer('P2')
+        g = Game(p1, p2)
+        winner = g.play()
+        self.assertTrue(winner == p1 or winner == p2)
 
 
 if __name__ == '__main__':
