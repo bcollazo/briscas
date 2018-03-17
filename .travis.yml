@@ -6,9 +6,6 @@ python:
   - "3.5"
   - "3.6"
 install:
-  - pip install pipenv
-  - pipenv install --dev
+  - make
 script:
-  - pipenv run flake8 setup.py briscas tests
-  - pipenv run coverage run --source briscas -m py.test tests
-  - pipenv run codecov
+  - make test
