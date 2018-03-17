@@ -57,8 +57,8 @@ class ModelTest(unittest.TestCase):
         p1 = RandomPlayer('P1')
         p2 = RandomPlayer('P2')
         g = Game(p1, p2)
-        winner = g.play()
-        self.assertTrue(winner == p1 or winner == p2)
+        g.play()
+        self.assertFalse(g.deck.has_cards())
 
 
 if __name__ == '__main__':
