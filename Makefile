@@ -1,7 +1,4 @@
 init:
-ifeq (${TRAVIS_PYTHON_VERSION},3.3)
-	pip install --upgrade setuptools
-endif
 	pip install pipenv
 	pipenv install --dev
 ifeq (${TRAVIS_PYTHON_VERSION},2.7)
