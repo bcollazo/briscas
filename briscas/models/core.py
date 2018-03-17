@@ -176,6 +176,8 @@ class Game:
             self._print('===== %s WINS =====' % (self.player2.name))
             self.winner = self.player2
 
+        return self.winner
+
     def to_json(self):
         data = {
             'winner': self.winner.name,

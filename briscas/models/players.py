@@ -33,8 +33,8 @@ class Player(object):
 class HumanPlayer(Player):
     def play(self, life_card, thrown=None):
         print('Hand: ' + str(self.hand))
-        playable = [i + 1 for i in range(len(self.hand))]
-        prompt = 'Choose (%s) >>> ' % (', '.join([str(i) for i in playable]))
+        playable = [str(i + 1) for i in range(len(self.hand))]
+        prompt = 'Choose (%s) >>> ' % (', '.join([i for i in playable]))
         i = ask_for_input(prompt, playable)
         return self.hand.pop(int(i) - 1)
 
