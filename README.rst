@@ -2,6 +2,12 @@
 briscas
 #######
 
+.. image:: https://travis-ci.org/bcollazo/briscas.svg?branch=master
+   :target: https://travis-ci.org/bcollazo/briscas
+
+.. image:: https://img.shields.io/pypi/pyversions/briscas.svg
+    :target: https://pypi.python.org/pypi/briscas
+
 Python library to model the briscas card game.
 
 It provides:
