@@ -12,3 +12,19 @@ ifeq (${TRAVIS_PYTHON_VERSION},3.6)
 	pipenv run codecov
 endif
 
+build-s:
+	python setup.py sdist
+
+build-2:
+	python setup.py bdist_wheel --python-tag py27
+
+build-3:
+	python setup.py bdist_wheel --python-tag py34
+	python setup.py bdist_wheel --python-tag py35
+	python setup.py bdist_wheel --python-tag py36
+
+clean:
+	rm -r dist
+	rm -r build
+	rm -r briscas.egg-info
+
