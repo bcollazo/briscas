@@ -15,6 +15,7 @@ pytest = "*"
 mock = "*"
 "flake8" = "*"
 codecov = "*"
+twine = "*"
 
 
 [requires]
