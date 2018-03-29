@@ -1,8 +1,6 @@
 from __future__ import print_function
 
 import random
-import os
-import json
 
 from briscas.models.core import Game
 from briscas.util import ask_for_input
