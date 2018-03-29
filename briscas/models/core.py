@@ -183,7 +183,7 @@ class Game:
 
     def to_json(self):
         data = {
-            'winner': self.winner.name,
+            'winner': None if self.winner is None else self.winner.name,
             'plays': self.plays,
             'life_suite': self.life_card.suite.name
         }
