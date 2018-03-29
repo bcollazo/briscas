@@ -72,6 +72,20 @@ class ModelTest(unittest.TestCase):
         self.assertTrue(print_mock.called)
         self.assertNotEqual(g.to_json(), '')
 
+    def test_set_winner(self):
+        p1 = RandomPlayer('P1')
+        p2 = RandomPlayer('P2')
+        g = Game(p1, p2)
+
+        g.set_winner(60, 60)
+        self.assertIsNone(g.winner)
+
+        g.set_winner(61, 59)
+        self.assertEqual(g.winner, p1)
+
+        g.set_winner(59, 61)
+        self.assertEqual(g.winner, p2)
+
 
 if __name__ == '__main__':
     unittest.main()

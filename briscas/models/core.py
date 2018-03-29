@@ -170,6 +170,10 @@ class Game:
             self.player2.name, p2_score,
             [c for c in self.player2.pile if c.number in POINTS]))
 
+        self.set_winner(p1_score, p2_score)
+        return self.winner
+
+    def set_winner(self, p1_score, p2_score):
         if p1_score > p2_score:
             self._print('===== %s WINS =====' % (self.player1.name))
             self.winner = self.player1
@@ -178,8 +182,6 @@ class Game:
         else:
             self._print('===== %s WINS =====' % (self.player2.name))
             self.winner = self.player2
-
-        return self.winner
 
     def to_json(self):
         data = {
