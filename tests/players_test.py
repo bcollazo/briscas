@@ -1,7 +1,7 @@
 import unittest
 
 from briscas.models.core import Card, Suite
-from briscas.models.players import RandomPlayer, HumanPlayer
+from briscas.models.players import RandomPlayer, HumanPlayer, LocalPlayer
 
 import mock
 
@@ -19,4 +19,7 @@ class PlayersTest(unittest.TestCase):
 
         print_mock = mock.Mock()
         p = HumanPlayer('Bryan', print_fn=print_mock)
+        self._assert_play_pops_card(p)
+
+        p = LocalPlayer('Bryan')
         self._assert_play_pops_card(p)
