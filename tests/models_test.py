@@ -3,6 +3,8 @@ import unittest
 from briscas.models.core import Game, Card, Suite, Deck
 from briscas.models.players import RandomPlayer
 
+import mock
+
 
 TEST_CASES = [
     [Card(1, Suite.ORO), Card(3, Suite.ORO), Card(4, Suite.ORO), True],
@@ -59,6 +61,16 @@ class ModelTest(unittest.TestCase):
         g = Game(p1, p2)
         g.play()
         self.assertFalse(g.deck.has_cards())
+
+    def test_verbose_game(self):
+        p1 = RandomPlayer('P1')
+        p2 = RandomPlayer('P2')
+        print_mock = mock.Mock()
+        g = Game(p1, p2, verbose=True, print_fn=print_mock)
+        g.play()
+        self.assertFalse(g.deck.has_cards())
+        self.assertTrue(print_mock.called)
+        self.assertNotEqual(g.to_json(), '')
 
 
 if __name__ == '__main__':

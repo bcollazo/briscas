@@ -99,7 +99,7 @@ class Game:
     def score(pile):
         return sum([c.points() for c in pile])
 
-    def __init__(self, player1, player2, verbose=False):
+    def __init__(self, player1, player2, verbose=False, print_fn=print):
         self.verbose = verbose
         self.deck = Deck()
         self.player1 = player1
@@ -107,6 +107,7 @@ class Game:
         self.winner = None
         self.plays = []  # list of maps
         self.life_card = self.deck.peek_last_card()  # for recording
+        self.print_fn = print_fn
 
     def _deal(self):
         cards = [self.deck.pop() for i in range(6)]
@@ -115,7 +116,7 @@ class Game:
 
     def _print(self, message):
         if self.verbose:
-            print(message)
+            self.print_fn(message)
 
     def log_play(self, commander, c_play, follower, f_play):
         play = {

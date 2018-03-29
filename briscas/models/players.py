@@ -27,12 +27,16 @@ class Player(object):
 
     # TODO: Future to include piles
     def play(self, life_card, thrown=None):
-        raise Exception('Not yet implemented!')
+        raise Exception('Not yet implemented!')  # pragma: no cover
 
 
 class HumanPlayer(Player):
-    def play(self, life_card, thrown=None):
-        print('Hand: ' + str(self.hand))
+    def __init__(self, name, print_fn=print):
+        super(HumanPlayer, self).__init__(name)
+        self.print_fn = print_fn
+
+    def play(self, life_card, thrown=None, print_fn=print):
+        self.print_fn('Hand: ' + str(self.hand))
         playable = [str(i + 1) for i in range(len(self.hand))]
         prompt = 'Choose (%s) >>> ' % (', '.join([i for i in playable]))
         i = ask_for_input(prompt, playable)
