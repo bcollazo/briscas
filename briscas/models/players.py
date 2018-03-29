@@ -79,36 +79,3 @@ class LocalPlayer(Player):
         j = self.least_good_index(betters, life_card)
         i = self.hand.index(betters[j])
         return self.hand.pop(i)
-
-
-class SmartPlayer(Player):
-    # Uses pile data as well.  To build probabilities.
-    pass
-
-
-# TODO:
-class KNNPlayer(Player):
-    def __init__(self, name, k, data_dir='data/'):
-        super(KNNPlayer, self).__init__(name)
-        self.k = k
-        # Read games into memory.
-        self.games = []
-        for file in os.listdir(data_dir):
-            with open(data_dir + file, 'rb') as f:
-                game = json.loads(f.read())
-                self.games.append(game)
-        print("Loaded", len(self.games))
-
-    def distance(self, game):
-        pass
-
-    def play(self, life_card, thrown=None):
-        # Find k closest hands in games won.
-        # out of all similar hands in given situation (thrown, life)
-        # whats concensus from winners?
-        hands = []
-        for game in self.games:
-            winner = game['winner']
-            for play in game['plays']:
-                pass
-        print(hands, winner)  # TODO:
