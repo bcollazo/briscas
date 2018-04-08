@@ -1,4 +1,5 @@
 import unittest
+import random
 
 from briscas.models.core import Card, Suite
 from briscas.models.players import RandomPlayer, HumanPlayer, LocalPlayer
@@ -17,8 +18,7 @@ class PlayersTest(unittest.TestCase):
         p = RandomPlayer('Bryan')
         self._assert_play_pops_card(p)
 
-        print_mock = mock.Mock()
-        p = HumanPlayer('Bryan', print_fn=print_mock)
+        p = HumanPlayer('Bryan', print_fn=mock.Mock())
         self._assert_play_pops_card(p)
 
     def test_play_pops_card_with_thrown(self):
@@ -41,3 +41,18 @@ class PlayersTest(unittest.TestCase):
         card = p.play(Card(1, Suite.ORO), thrown=Card(5, Suite.ORO))
         self.assertEqual(len(p.hand), 2)
         self.assertEqual(card.number, 6)
+
+    # def test_human_print_hand(self):
+    #     print_fn = mock.Mock()
+
+    #     p = HumanPlayer('p', print_fn=print_fn)
+    #     SUITES = [Suite.BASTON, Suite.ORO, Suite.ESPADA, Suite.COPA]
+    #     for j in range(5, 13):
+    #         x = random.randint(0, 3)
+    #         y = random.randint(0, 3)
+    #         z = random.randint(0, 3)
+    #         i = random.randint(1, 12)
+    #         p.init([Card(i - 1, SUITES[x]), Card(i - 2, SUITES[y]), Card(i, SUITES[z])])
+    #         p.print_hand()
+    #     self.assertTrue(print_fn.called)
+    #     self.assertFalse(True)
