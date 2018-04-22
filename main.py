@@ -1,4 +1,4 @@
-from briscas.models.core import Game
+from briscas.game import Game
 from briscas.models.players import (
     HumanPlayer, RandomPlayer, LocalPlayer
 )

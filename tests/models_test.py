@@ -1,7 +1,9 @@
 import unittest
 
-from briscas.models.core import Game, Card, Suite, Deck
+from briscas.models.core import Card, Suite, Deck
 from briscas.models.players import RandomPlayer
+from briscas.game import Game
+from briscas.util import is_better
 
 import mock
 
@@ -53,7 +55,7 @@ class ModelTest(unittest.TestCase):
     def test_cases(self):
         for case in TEST_CASES:
             (a, b, life, result) = case
-            self.assertEqual(result, Game.is_better(a, b, life))
+            self.assertEqual(result, is_better(a, b, life))
 
     def test_game(self):
         p1 = RandomPlayer('P1')

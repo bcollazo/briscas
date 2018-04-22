@@ -2,8 +2,7 @@ from __future__ import print_function
 
 import random
 
-from briscas.models.core import Game, Suite, Colors
-from briscas.util import ask_for_input
+from briscas.util import is_better, ask_for_input, hand_string
 
 NUMBER_ORDERING = [1, 3] + list(range(12, 3, -1)) + [2]
 
@@ -30,94 +29,13 @@ class Player(object):
         raise Exception('Not yet implemented!')  # pragma: no cover
 
 
-def b(i, j):
-    """Block coordinates"""
-    return [(i, j), (i, j+1), (i+1, j), (i+1, j+1)]
-
-
-CARD_LENGTH = L = 14
-CARD_HEIGHT = H = 10
-SYMBOL_LENGTH = SL = 2
-SYMBOL = {
-    Suite.ORO: Colors.YELLOW + '#' + Colors.RESET,
-    Suite.BASTON: Colors.GREEN + '#' + Colors.RESET,
-    Suite.ESPADA: Colors.BLUE + '#' + Colors.RESET,
-    Suite.COPA: Colors.RED + '#' + Colors.RESET,
-}
-TOP_BOTTOM_BORDER = [' '] + ['-'] * (L - 2) + [' ']
-EMPTY_LINE = ['|'] + [' '] * (L - 2) + ['|']
-L2 = int(L / 2) - 1  # HALF LENGTH
-H2 = int(H / 2) - 1  # HALF HEIGHT
-L4 = int(L2 / 2)
-H4 = int(H2 / 2)
-SYMBOL_LOCATIONS = {
-    1: [b(L2, H2)],
-    2: [b(L2, H4), b(L2, H2 + H4)],
-    3: [b(L2, H4 - 1), b(L2, H2), b(L2, H2 + H4 + 1)],
-    4: [b(L4, H4), b(L4, H2 + H4),
-        b(L2 + L4, H4), b(L2 + L4, H2 + H4)],
-    5: [b(L4, H4), b(L4, H2 + H4),
-        b(L2 + L4, H4), b(L2 + L4, H2 + H4),
-        b(L2, H2)],
-    6: [b(L4, H4 - 1), b(L4, H2), b(L4, H2 + H4 + 1),
-        b(L2 + L4, H4 - 1), b(L2 + L4, H2), b(L2 + L4, H2 + H4 + 1)],
-    7: [b(L4, H4 - 1), b(L4, H2), b(L4, H2 + H4 + 1),
-        b(L2 + L4, H4 - 1), b(L2 + L4, H2), b(L2 + L4, H2 + H4 + 1),
-        b(L2, H4)],
-    8: [b(L4, H4 - 1), b(L4, H2), b(L4, H2 + H4 + 1),
-        b(L2 + L4, H4 - 1), b(L2 + L4, H2), b(L2 + L4, H2 + H4 + 1),
-        b(L2, H4), b(L2, H2 + H4)],
-    9: [b(L4, H4 - 1), b(L4, H2), b(L4, H2 + H4 + 1),
-        b(L2 + L4, H4 - 1), b(L2 + L4, H2), b(L2 + L4, H2 + H4 + 1),
-        b(L2, H4 - 1), b(L2, H2), b(L2, H2 + H4 + 1)],
-    10: [(L2 - 2, H2 - 2), (L2 - 2, H2 - 1), (L2 - 2, H2), (L2 - 2, H2 + 1), (L2 - 2, H2 + 2),
-         (L2 + 1, H2 - 2), (L2 + 1, H2 - 1), (L2 + 1, H2), (L2 + 1, H2 + 1), (L2 + 1, H2 + 2),
-         (L2 + 2, H2 - 2), (L2 + 2, H2 + 2),
-         (L2 + 3, H2 - 2), (L2 + 3, H2 - 1), (L2 + 3, H2), (L2 + 3, H2 + 1), (L2 + 3, H2 + 2),],
-    11: [(L2 - 2, H2 - 2), (L2 - 2, H2 - 1), (L2 - 2, H2), (L2 - 2, H2 + 1), (L2 - 2, H2 + 2),
-         (L2 + 3, H2 - 2), (L2 + 3, H2 - 1), (L2 + 3, H2), (L2 + 3, H2 + 1), (L2 + 3, H2 + 2),],
-    12: [(L2 - 2, H2 - 2), (L2 - 2, H2 - 1), (L2 - 2, H2), (L2 - 2, H2 + 1), (L2 - 2, H2 + 2),
-         (L2 + 1, H2 - 2), (L2 + 1, H2), (L2 + 1, H2 + 1), (L2 + 1, H2 + 2),
-         (L2 + 2, H2 - 2), (L2 + 2, H2), (L2 + 2, H2 + 2),
-         (L2 + 3, H2 - 2), (L2 + 3, H2 - 1), (L2 + 3, H2), (L2 + 3, H2 + 2),],
-}
-# Flatten blocks.
-for i in range(1, 10):
-    SYMBOL_LOCATIONS[i] = [t for block in SYMBOL_LOCATIONS[i] for t in block]
-
-
 class HumanPlayer(Player):
     def __init__(self, name, print_fn=print):
         super(HumanPlayer, self).__init__(name)
         self.print_fn = print_fn
 
-    def print_hand(self, print_fn=print):
-        # Create empty matrix
-        matrix = []
-        matrix.append(TOP_BOTTOM_BORDER * len(self.hand))
-        for i in range(H - 2):
-            matrix.append(EMPTY_LINE * len(self.hand))
-        matrix.append(TOP_BOTTOM_BORDER * len(self.hand))
-
-        # Insert symbols
-        o = 0  # offset
-        for card in self.hand:
-            s = SYMBOL[card.suite]
-            matrix[1][o + L - 2] = str(card.number)[-1]
-            matrix[H - 2][o + 1] = str(card.number)[0]
-            if len(str(card.number)) > 1:  # Then add other digit
-                matrix[1][o + L - 3] = str(card.number)[0]
-                matrix[H - 2][o + 2] = str(card.number)[1]
-            for (i, j) in SYMBOL_LOCATIONS[card.number]:
-                matrix[j][o + i] = s
-            o += CARD_LENGTH
-
-        # Build into string
-        string = '\n'.join([''.join(line) for line in matrix])
-        self.print_fn(string)
-
     def play(self, life_card, thrown=None):
-        self.print_hand()
+        self.print_fn(hand_string(self.hand))
         playable = [str(i + 1) for i in range(len(self.hand))]
         prompt = 'Choose (%s) >>> ' % (', '.join([i for i in playable]))
         i = ask_for_input(prompt, playable)
@@ -152,7 +70,7 @@ class LocalPlayer(Player):
 
         betters = []
         for i, card in enumerate(self.hand):
-            if Game.is_better(card, thrown, life_card):
+            if is_better(card, thrown, life_card):
                 betters.append(card)
         if len(betters) == 0:
             i = self.least_good_index(self.hand, life_card)
