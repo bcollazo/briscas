@@ -14,13 +14,13 @@ def choose_player(name):
     }[i]()
 
 
-print('===== Players')
-print('0. Human Player')
-print('1. Random Player')
-print('2. Local Player')
-p1 = choose_player('P1')
-p2 = choose_player('P2')
+def main():
+    print('===== Players')
+    print('0. Human Player')
+    print('1. Random Player')
+    print('2. Local Player')
+    p1 = choose_player('P1')
+    p2 = choose_player('P2')
 
-# Start game.
-game = Game(p1, p2, verbose=True)
-game.play()
+    game = Game(p1, p2, verbose=True)
+    game.play()
