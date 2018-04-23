@@ -1,6 +1,8 @@
-from builtins import input
+from __future__ import absolute_import
 
 from briscas.models import Suite, Colors
+
+from six.moves import range
 
 
 def ask_for_input(prompt, allowed, input_fn=input, exit_fn=exit):

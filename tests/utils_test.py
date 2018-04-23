@@ -1,7 +1,9 @@
-import mock
+from __future__ import absolute_import
 import unittest
 
 from briscas.util import ask_for_input
+
+import mock
 
 
 class UtilsTest(unittest.TestCase):
