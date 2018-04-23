@@ -2,9 +2,7 @@ from __future__ import print_function
 from builtins import input
 
 from briscas.game import Game
-from briscas.models.players import (
-    HumanPlayer, RandomPlayer, LocalPlayer
-)
+from briscas.players import HumanPlayer, RandomPlayer, LocalPlayer
 from briscas.util import ask_for_input
 
 

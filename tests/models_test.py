@@ -1,7 +1,7 @@
 import unittest
 
-from briscas.models.core import Card, Suite, Deck
-from briscas.models.players import RandomPlayer
+from briscas.models import Card, Suite, Deck
+from briscas.players import RandomPlayer
 from briscas.game import Game
 from briscas.util import is_better
 

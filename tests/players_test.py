@@ -1,7 +1,7 @@
 import unittest
 
-from briscas.models.core import Card, Suite
-from briscas.models.players import RandomPlayer, HumanPlayer, LocalPlayer
+from briscas.models import Card, Suite
+from briscas.players import RandomPlayer, HumanPlayer, LocalPlayer
 
 import mock
 
@@ -12,7 +12,7 @@ class PlayersTest(unittest.TestCase):
         p.play(Card(2, Suite.ORO))
         self.assertEqual(len(p.hand), 2)
 
-    @mock.patch('briscas.models.players.ask_for_input')
+    @mock.patch('briscas.players.ask_for_input')
     def test_play_pops_card(self, m):
         p = RandomPlayer('Bryan')
         self._assert_play_pops_card(p)

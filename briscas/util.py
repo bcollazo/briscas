@@ -1,6 +1,6 @@
 from builtins import input
 
-from briscas.models.core import Suite, Colors
+from briscas.models import Suite, Colors
 
 
 def ask_for_input(prompt, allowed, input_fn=input, exit_fn=exit):

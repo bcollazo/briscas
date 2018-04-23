@@ -2,8 +2,8 @@ from __future__ import print_function
 
 import json
 
-from briscas.models.core import Deck, POINTS
-from briscas.models.players import HumanPlayer
+from briscas.models import Deck, POINTS
+from briscas.players import HumanPlayer
 from briscas.util import is_better, hand_string
 
 
