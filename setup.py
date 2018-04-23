@@ -3,13 +3,13 @@ from setuptools import setup
 setup(
     name='briscas',
     packages=['briscas'],
-    version='1.1',
+    version='1.2',
     description='Library to model the briscas card game.',
     author='Bryan Collazo',
     author_email='bcollazo2010@gmail.com',
     license='MIT',
     url='https://github.com/bcollazo/briscas',
-    download_url='https://github.com/bcollazo/briscas/archive/v1.1.zip',
+    download_url='https://github.com/bcollazo/briscas/archive/v1.2.tar.gz',
     keywords=['briscas', 'card', 'game', 'terminal', 'naipes'],
     classifiers=[
         'Development Status :: 3 - Alpha',
