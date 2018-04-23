@@ -5,11 +5,12 @@ from briscas.game import Game
 from briscas.players import HumanPlayer, RandomPlayer, LocalPlayer
 from briscas.util import ask_for_input
 
-from six.moves import range
+from six.moves import input, range
 
 
 def choose_player(name, input_fn=input):
-    i = ask_for_input('Choose %s >>> ' % name, [str(i) for i in range(5)],
+    i = ask_for_input('Choose %s >>> ' % name,
+                      [str(i) for i in range(5)],
                       input_fn=input_fn)
     return {
         '0': lambda: HumanPlayer(name),
