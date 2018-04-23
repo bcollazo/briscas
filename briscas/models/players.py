@@ -2,8 +2,7 @@ from __future__ import print_function
 
 import random
 
-from briscas.models.core import Game
-from briscas.util import ask_for_input
+from briscas.util import is_better, ask_for_input, hand_string
 
 NUMBER_ORDERING = [1, 3] + list(range(12, 3, -1)) + [2]
 
@@ -35,8 +34,8 @@ class HumanPlayer(Player):
         super(HumanPlayer, self).__init__(name)
         self.print_fn = print_fn
 
-    def play(self, life_card, thrown=None, print_fn=print):
-        self.print_fn('Hand: ' + str(self.hand))
+    def play(self, life_card, thrown=None):
+        self.print_fn(hand_string(self.hand))
         playable = [str(i + 1) for i in range(len(self.hand))]
         prompt = 'Choose (%s) >>> ' % (', '.join([i for i in playable]))
         i = ask_for_input(prompt, playable)
@@ -71,7 +70,7 @@ class LocalPlayer(Player):
 
         betters = []
         for i, card in enumerate(self.hand):
-            if Game.is_better(card, thrown, life_card):
+            if is_better(card, thrown, life_card):
                 betters.append(card)
         if len(betters) == 0:
             i = self.least_good_index(self.hand, life_card)

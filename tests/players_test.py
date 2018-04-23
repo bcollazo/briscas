@@ -17,8 +17,7 @@ class PlayersTest(unittest.TestCase):
         p = RandomPlayer('Bryan')
         self._assert_play_pops_card(p)
 
-        print_mock = mock.Mock()
-        p = HumanPlayer('Bryan', print_fn=print_mock)
+        p = HumanPlayer('Bryan', print_fn=mock.Mock())
         self._assert_play_pops_card(p)
 
     def test_play_pops_card_with_thrown(self):

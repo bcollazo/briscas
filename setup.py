@@ -21,4 +21,7 @@ setup(
         'Programming Language :: Python :: 3.6',
     ],
     install_requires=[],
+    entry_points={
+        'console_scripts': ['briscas=briscas.main:main']
+    }
 )
