@@ -1,8 +1,10 @@
 from __future__ import print_function
-
+from __future__ import absolute_import
 import random
 
 from briscas.util import is_better, ask_for_input, hand_string
+
+from six.moves import range
 
 NUMBER_ORDERING = [1, 3] + list(range(12, 3, -1)) + [2]
 

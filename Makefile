@@ -1,9 +1,6 @@
 init:
 	pip install pipenv
 	pipenv install --dev
-ifeq (${TRAVIS_PYTHON_VERSION},2.7)
-	pip install future
-endif
 
 test:
 	pipenv run coverage run --source briscas -m py.test tests

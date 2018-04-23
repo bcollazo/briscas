@@ -1,5 +1,8 @@
+from __future__ import absolute_import
 import enum
 import random
+
+from six.moves import range
 
 POINTS = {1: 11, 3: 10, 12: 4, 11: 3, 10: 2}
 

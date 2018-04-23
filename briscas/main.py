@@ -1,9 +1,11 @@
 from __future__ import print_function
-from builtins import input
+from __future__ import absolute_import
 
 from briscas.game import Game
 from briscas.players import HumanPlayer, RandomPlayer, LocalPlayer
 from briscas.util import ask_for_input
+
+from six.moves import range
 
 
 def choose_player(name, input_fn=input):
