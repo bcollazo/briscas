@@ -24,7 +24,10 @@ build-3:
 	python setup.py bdist_wheel --python-tag py36
 
 clean:
-	rm -r dist
-	rm -r build
-	rm -r briscas.egg-info
-
+	find briscas -name *.pyc -delete
+	find tests -name *.pyc -delete
+	find briscas -name __pycache__ -delete
+	find tests -name __pycache__ -delete
+	rm -rf dist
+	rm -rf build
+	rm -rf briscas.egg-info
