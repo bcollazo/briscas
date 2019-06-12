@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 import unittest
 
-from briscas.models import Card, Suite, Deck
+from briscas.models import Card, Suit, Deck
 from briscas.players import RandomPlayer
 from briscas.game import Game
 from briscas.util import is_better
@@ -10,20 +10,20 @@ import mock
 
 
 TEST_CASES = [
-    [Card(1, Suite.ORO), Card(3, Suite.ORO), Card(4, Suite.ORO), True],
-    [Card(1, Suite.ORO), Card(2, Suite.ORO), Card(4, Suite.ORO), True],
-    [Card(1, Suite.ORO), Card(12, Suite.ORO), Card(4, Suite.ORO), True],
-    [Card(1, Suite.ORO), Card(2, Suite.COPA), Card(4, Suite.COPA), False],
-    [Card(3, Suite.ORO), Card(12, Suite.ORO), Card(4, Suite.ORO), True],
-    [Card(3, Suite.ORO), Card(2, Suite.ORO), Card(4, Suite.ORO), True],
-    [Card(4, Suite.ORO), Card(2, Suite.ORO), Card(4, Suite.ORO), True],
-    [Card(10, Suite.ORO), Card(7, Suite.ORO), Card(4, Suite.ORO), True],
-    [Card(10, Suite.ORO), Card(3, Suite.ESPADA), Card(4, Suite.ORO), True],
-    [Card(10, Suite.ORO), Card(12, Suite.ESPADA), Card(4, Suite.ORO), True],
-    [Card(2, Suite.ORO), Card(5, Suite.COPA), Card(4, Suite.ORO), True],
-    [Card(2, Suite.ORO), Card(5, Suite.COPA), Card(4, Suite.ESPADA), True],
-    [Card(10, Suite.ORO), Card(7, Suite.COPA), Card(4, Suite.ESPADA), True],
-    [Card(10, Suite.ORO), Card(7, Suite.COPA), Card(4, Suite.COPA), False],
+    [Card(1, Suit.GOLD), Card(3, Suit.GOLD), Card(4, Suit.GOLD), True],
+    [Card(1, Suit.GOLD), Card(2, Suit.GOLD), Card(4, Suit.GOLD), True],
+    [Card(1, Suit.GOLD), Card(12, Suit.GOLD), Card(4, Suit.GOLD), True],
+    [Card(1, Suit.GOLD), Card(2, Suit.CUP), Card(4, Suit.CUP), False],
+    [Card(3, Suit.GOLD), Card(12, Suit.GOLD), Card(4, Suit.GOLD), True],
+    [Card(3, Suit.GOLD), Card(2, Suit.GOLD), Card(4, Suit.GOLD), True],
+    [Card(4, Suit.GOLD), Card(2, Suit.GOLD), Card(4, Suit.GOLD), True],
+    [Card(10, Suit.GOLD), Card(7, Suit.GOLD), Card(4, Suit.GOLD), True],
+    [Card(10, Suit.GOLD), Card(3, Suit.SWORD), Card(4, Suit.GOLD), True],
+    [Card(10, Suit.GOLD), Card(12, Suit.SWORD), Card(4, Suit.GOLD), True],
+    [Card(2, Suit.GOLD), Card(5, Suit.CUP), Card(4, Suit.GOLD), True],
+    [Card(2, Suit.GOLD), Card(5, Suit.CUP), Card(4, Suit.SWORD), True],
+    [Card(10, Suit.GOLD), Card(7, Suit.CUP), Card(4, Suit.SWORD), True],
+    [Card(10, Suit.GOLD), Card(7, Suit.CUP), Card(4, Suit.CUP), False],
 ]
 
 
@@ -45,13 +45,13 @@ class ModelTest(unittest.TestCase):
 
     def test_invalid_card_number(self):
         with self.assertRaises(Exception):
-            Card(15, Suite.ORO)
+            Card(15, Suit.GOLD)
 
     def test_points(self):
-        self.assertEqual(Card(1, Suite.ORO).points(), 11)
-        self.assertEqual(Card(3, Suite.ORO).points(), 10)
-        self.assertEqual(Card(2, Suite.ORO).points(), 0)
-        self.assertEqual(Card(11, Suite.ORO).points(), 3)
+        self.assertEqual(Card(1, Suit.GOLD).points(), 11)
+        self.assertEqual(Card(3, Suit.GOLD).points(), 10)
+        self.assertEqual(Card(2, Suit.GOLD).points(), 0)
+        self.assertEqual(Card(11, Suit.GOLD).points(), 3)
 
     def test_cases(self):
         for case in TEST_CASES:

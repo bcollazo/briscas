@@ -97,7 +97,7 @@ class Game:
             self._print('===== %s WINS =====' % (self.player1.name))
             self.winner = self.player1
         elif p1_score == p2_score:
-            self._print("Empate!")
+            self._print("Draw!")
         else:
             self._print('===== %s WINS =====' % (self.player2.name))
             self.winner = self.player2

@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 import unittest
 
-from briscas.models import Card, Suite
+from briscas.models import Card, Suit
 from briscas.players import RandomPlayer, HumanPlayer, LocalPlayer
 
 import mock
@@ -9,8 +9,8 @@ import mock
 
 class PlayersTest(unittest.TestCase):
     def _assert_play_pops_card(self, p):
-        p.init([Card(4, Suite.ORO), Card(5, Suite.ORO), Card(6, Suite.ORO)])
-        p.play(Card(2, Suite.ORO))
+        p.init([Card(4, Suit.GOLD), Card(5, Suit.GOLD), Card(6, Suit.GOLD)])
+        p.play(Card(2, Suit.GOLD))
         self.assertEqual(len(p.hand), 2)
 
     @mock.patch('briscas.players.ask_for_input')
@@ -25,19 +25,19 @@ class PlayersTest(unittest.TestCase):
         p = LocalPlayer('Bryan')
 
         # none is thrown
-        p.init([Card(4, Suite.ORO), Card(5, Suite.ORO), Card(6, Suite.ORO)])
-        card = p.play(Card(2, Suite.ORO))
+        p.init([Card(4, Suit.GOLD), Card(5, Suit.GOLD), Card(6, Suit.GOLD)])
+        card = p.play(Card(2, Suit.GOLD))
         self.assertEqual(len(p.hand), 2)
         self.assertEqual(card.number, 4)  # weakest card
 
         # has no better hand
-        p.init([Card(4, Suite.ORO), Card(5, Suite.ORO), Card(6, Suite.ORO)])
-        card = p.play(Card(2, Suite.ORO), thrown=Card(3, Suite.ORO))
+        p.init([Card(4, Suit.GOLD), Card(5, Suit.GOLD), Card(6, Suit.GOLD)])
+        card = p.play(Card(2, Suit.GOLD), thrown=Card(3, Suit.GOLD))
         self.assertEqual(len(p.hand), 2)
         self.assertEqual(card.number, 4)  # weakest card
 
         # has better hand
-        p.init([Card(4, Suite.ORO), Card(6, Suite.ORO), Card(7, Suite.ORO)])
-        card = p.play(Card(1, Suite.ORO), thrown=Card(5, Suite.ORO))
+        p.init([Card(4, Suit.GOLD), Card(6, Suit.GOLD), Card(7, Suit.GOLD)])
+        card = p.play(Card(1, Suit.GOLD), thrown=Card(5, Suit.GOLD))
         self.assertEqual(len(p.hand), 2)
         self.assertEqual(card.number, 6)

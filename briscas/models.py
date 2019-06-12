@@ -16,26 +16,26 @@ class Colors:
     YELLOW = '\033[93m'
 
 
-class Suite(enum.Enum):
-    ORO = 1
-    COPA = 2
-    ESPADA = 3
-    BASTON = 4
+class Suit(enum.Enum):
+    GOLD = 1
+    CUP = 2
+    SWORD = 3
+    CLUB = 4
 
     def __str__(self):
-        if self == Suite.ORO:
+        if self == Suit.GOLD:
             return Colors.YELLOW + self.name + Colors.RESET
-        elif self == Suite.COPA:
+        elif self == Suit.CUP:
             return Colors.RED + self.name + Colors.RESET
-        elif self == Suite.ESPADA:
+        elif self == Suit.SWORD:
             return Colors.BLUE + self.name + Colors.RESET
-        elif self == Suite.BASTON:
+        elif self == Suit.CLUB:
             return Colors.GREEN + self.name + Colors.RESET
 
 
 class Card:
     def __init__(self, number, suite):
-        if (suite not in Suite or
+        if (suite not in Suit or
                 not isinstance(number, int) or
                 number < 1 or number > 13):
             raise Exception('Invalid card')
@@ -65,7 +65,7 @@ class Card:
 class Deck:
     def __init__(self):
         self._cards = []
-        for s in Suite:
+        for s in Suit:
             for n in range(1, 13):
                 self._cards.append(Card(n, s))
         random.shuffle(self._cards)

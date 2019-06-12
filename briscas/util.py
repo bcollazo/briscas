@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-from briscas.models import Suite, Colors
+from briscas.models import Suit, Colors
 
 from six.moves import input, range
 
@@ -38,10 +38,10 @@ CARD_LENGTH = L = 14
 CARD_HEIGHT = H = 10
 SYMBOL_LENGTH = SL = 2
 SYMBOL = {
-    Suite.ORO: Colors.YELLOW + '#' + Colors.RESET,
-    Suite.BASTON: Colors.GREEN + '#' + Colors.RESET,
-    Suite.ESPADA: Colors.BLUE + '#' + Colors.RESET,
-    Suite.COPA: Colors.RED + '#' + Colors.RESET,
+    Suit.GOLD: Colors.YELLOW + '#' + Colors.RESET,
+    Suit.CLUB: Colors.GREEN + '#' + Colors.RESET,
+    Suit.SWORD: Colors.BLUE + '#' + Colors.RESET,
+    Suit.CUP: Colors.RED + '#' + Colors.RESET,
 }
 TOP_BOTTOM_BORDER = [' '] + ['-'] * (L - 2) + [' ']
 EMPTY_LINE = ['|'] + [' '] * (L - 2) + ['|']
